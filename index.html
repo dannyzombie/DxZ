@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danny Zombie's Gaming Corner</title>
+    <title>Danny Zombie's Gaming Hub</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,10 +29,10 @@
         }
         .video-container {
             position: relative;
-            margin: 20px auto;
+            width: 100%;
             max-width: 100%;
-            height: auto;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 20px auto;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
         }
         .video-container iframe {
             position: absolute;
@@ -43,14 +43,13 @@
             border: none;
         }
         .resizer {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
             background: #1e90ff;
             position: absolute;
             right: 0;
             bottom: 0;
             cursor: se-resize;
-            z-index: 10;
         }
         footer {
             background-color: #1e1e1e;
@@ -58,17 +57,28 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            text-align: center;
         }
         footer a {
             color: #1e90ff;
             text-decoration: none;
         }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .description p {
+                font-size: 1em;
+            }
+            .video-container {
+                padding-top: 56.25%; /* Maintain 16:9 aspect ratio */
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to Danny Zombie's Gaming Corner</h1>
+        <h1>Welcome to Danny Zombie's Gaming Hub</h1>
     </header>
     <div class="description">
         <p>My name is Danny Zombie and I love video games.</p>
@@ -85,21 +95,20 @@
     <script>
         const resizer = document.getElementById('resizer');
         const videoContainer = document.getElementById('video-container');
+        const video = document.getElementById('video');
 
-        resizer.addEventListener('mousedown', (e) => {
+        resizer.addEventListener('mousedown', function (e) {
             e.preventDefault();
             window.addEventListener('mousemove', resize);
             window.addEventListener('mouseup', stopResize);
         });
 
         function resize(e) {
-            const containerRect = videoContainer.getBoundingClientRect();
-            const newWidth = e.clientX - containerRect.left;
-            const newHeight = newWidth * 9 / 16; // Maintain 16:9 aspect ratio
-
-            if (newWidth >= 320) { // Minimum width constraint
-                videoContainer.style.width = `${newWidth}px`;
-                videoContainer.style.height = `${newHeight}px`;
+            const width = e.clientX - videoContainer.getBoundingClientRect().left;
+            const height = width * 9 / 16; // Maintain 16:9 aspect ratio
+            if (width >= 320) { // Minimum width constraint
+                videoContainer.style.width = `${width}px`;
+                videoContainer.style.height = `${height}px`;
             }
         }
 
