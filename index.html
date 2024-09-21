@@ -15,10 +15,13 @@
             background-color: #1b1b32;
             color: #fff;
             text-align: center;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
         header, footer {
-            background-color: #282846; /* Darker header */
+            background-color: #282846;
             padding: 20px 0;
+            z-index: 10;
+            position: relative;
         }
         h1 {
             margin: 0;
@@ -32,17 +35,23 @@
             font-size: 1.2em;
         }
         .video-container {
-            margin: 20px auto;
-            max-width: 800px;
-            border: 2px solid #282846;
-            border-radius: 10px;
-            background-color: #2e2e53;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            border: none; /* Remove border for a cleaner look */
+            background-color: #2e2e53; /* Background color */
+            position: relative;
+        }
+        #player {
+            width: 100%;
+            height: 100%; /* Full height of the container */
         }
         .social-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 20px 0;
+            position: relative;
+            z-index: 10;
         }
         .button {
             background-color: #1e90ff;
@@ -77,6 +86,20 @@
         footer p {
             color: #b3b3cc;
             font-size: 0.9em;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .description {
+                font-size: 1em;
+            }
+            .button {
+                font-size: 1em;
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
@@ -144,8 +167,8 @@
         function onYouTubeIframeAPIReady() {
             const randomIndex = Math.floor(Math.random() * videoIds.length);
             player = new YT.Player('player', {
-                height: '400',
                 width: '100%',
+                height: '100%',
                 videoId: videoIds[randomIndex],
                 playerVars: {
                     autoplay: 1,
@@ -158,11 +181,7 @@
 
         function toggleSocialLinks() {
             const socialLinks = document.getElementById('social-links');
-            if (socialLinks.style.display === "flex") {
-                socialLinks.style.display = "none";
-            } else {
-                socialLinks.style.display = "flex";
-            }
+            socialLinks.style.display = socialLinks.style.display === "flex" ? "none" : "flex";
         }
     </script>
 </body>
